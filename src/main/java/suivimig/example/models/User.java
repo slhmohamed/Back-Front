@@ -49,14 +49,14 @@ public class User {
         roles.add(role);
     }
 
-    /*--------------------------------------------------------*/
+    /*
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
             name = "user_product",
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "id_prod") }
     )
-    Set<Product> products = new HashSet<>();
+    Set<Product> products = new HashSet<>(); */
 
     {
         roles = new HashSet<>();

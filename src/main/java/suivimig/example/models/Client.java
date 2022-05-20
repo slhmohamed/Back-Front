@@ -1,5 +1,8 @@
 package suivimig.example.models;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -17,21 +20,21 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    @Size(max = 20)
+
     private String name;
 
-    @ManyToOne
+
+
+    @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL,optional = false) //updated recently by chahra
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Product product;
-
-    public Client(){}
-
-    public Client(String name) {
-        this.name = name;
-    }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -40,5 +43,21 @@ public class Client {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Client() {
+        super();
+    }
+
+    public Client orElse(Client client) {
+        return new Client();
     }
 }

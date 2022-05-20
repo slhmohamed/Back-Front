@@ -1,12 +1,17 @@
 package suivimig.example.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name  ="proc")
+
 public class Proc{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "proc_generator")
@@ -29,9 +34,11 @@ public class Proc{
     private String dateMAJ;
     private String commentaireMig;
 
-    @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL,optional = false)
+
+    @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL,optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Couv couverture;
+
 
     @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL,optional = false) //updated recently by chahra
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -55,7 +62,7 @@ public class Proc{
     private Scrum scrum;
 
     @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL,optional = false) //updated recently by chahra
-    @OnDelete(action = OnDeleteAction.CASCADE)
+
     private PrdSp prdSp;
 
     @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL,optional = false) //updated recently by chahra
@@ -64,7 +71,24 @@ public class Proc{
 
     @ManyToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL,optional = false) //updated recently by chahra
     @OnDelete(action = OnDeleteAction.CASCADE)
+
     private Priorite prioJas;
+
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade =   CascadeType.ALL ,
+            mappedBy = "procs")
+    @JsonIgnore
+    private Set<Product> products = new HashSet<>();
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
+
+
 
     public Long getId() {
         return id;
@@ -242,9 +266,38 @@ public class Proc{
         this.couverture = couverture;
     }
 
+
+
     public Proc() {
         super();
     }
 
 
+    @Override
+    public String toString() {
+        return "Proc{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", profilProc=" + profilProc +
+                ", traitement='" + traitement + '\'' +
+                ", sprint='" + sprint + '\'' +
+                ", jiraDev='" + jiraDev + '\'' +
+                ", quiDev='" + quiDev + '\'' +
+                ", jiraQa='" + jiraQa + '\'' +
+                ", quiQa='" + quiQa + '\'' +
+                ", jiraJas='" + jiraJas + '\'' +
+                ", commentaireJas='" + commentaireJas + '\'' +
+                ", dateMAJ='" + dateMAJ + '\'' +
+                ", commentaireMig='" + commentaireMig + '\'' +
+                ", couverture=" + couverture +
+                ", statutDev=" + statutDev +
+                ", statutQa=" + statutQa +
+                ", statutTrad=" + statutTrad +
+                ", statutJasper=" + statutJasper +
+                ", scrum=" + scrum +
+                ", prdSp=" + prdSp +
+                ", prio=" + prio +
+                ", prioJas=" + prioJas +
+                '}';
+    }
 }

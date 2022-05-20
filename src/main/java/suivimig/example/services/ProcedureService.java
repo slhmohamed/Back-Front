@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import suivimig.example.models.Proc;
 import suivimig.example.repository.ProcRepository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -15,7 +16,7 @@ public class ProcedureService {
 
 
 
-
+    /*
     public Proc addProc(Proc proc) {
         return procedureRepository.save(proc);
     }
@@ -36,9 +37,9 @@ public class ProcedureService {
         }
         return false;
 
-    }
+    }*/
 
-    public Proc updateProcedure(Proc procRequest) {
-        return procedureRepository.save(procRequest);
-    }
+
+
+
 }

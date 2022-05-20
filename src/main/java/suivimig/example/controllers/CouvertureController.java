@@ -33,7 +33,7 @@ public class CouvertureController {
     @PostMapping("/createCouverture")
     public ResponseEntity<Couv> createCouverture(@RequestBody Couv couverture) {
         System.out.println(couverture.toString());
-        Couv _couverture= couvertureRepository.save(new Couv(couverture.getOp(),couverture.getProg(),couverture.getCouv()));
+        Couv _couverture= couvertureRepository.save(new Couv(couverture.getValeur()));
         return new ResponseEntity<>(_couverture, HttpStatus.CREATED);
     }
 
@@ -41,9 +41,9 @@ public class CouvertureController {
     public ResponseEntity<Couv> updateCouverture(@PathVariable("id") long id, @RequestBody Couv couverture) throws ResourceNotFoundException {
         Couv _couverture = couvertureRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found couverture with id = " + id));
-        _couverture.setProg(couverture.getProg());
-        _couverture.setOp(couverture.getOp());
-        _couverture.setCouv(couverture.getCouv());
+       // _couverture.setOp(couverture.getOp());
+       // _couverture.setProg(couverture.getProg());
+        _couverture.setValeur(couverture.getValeur());
         return new ResponseEntity<>(couvertureRepository.save(_couverture),HttpStatus.OK);
     }
     @DeleteMapping("/deleteCouverture/{id}")
